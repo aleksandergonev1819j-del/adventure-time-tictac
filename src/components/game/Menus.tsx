@@ -148,7 +148,7 @@ export function CharacterSelect({
 }: {
   heading: string;
   subtitle: string;
-  takenId?: string;
+  takenId?: string | undefined;
   onSelect: (c: Character) => void;
   onBack: () => void;
 }) {
