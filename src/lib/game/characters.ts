@@ -27,4 +27,4 @@ export const CHARACTERS: Character[] = [
 ];
 
 export const getCharacter = (id: string): Character =>
-  CHARACTERS.find((c) => c.id === id) ?? CHARACTERS[0];
+  CHARACTERS.find((c) => c.id === id) ?? CHARACTERS[0]!;

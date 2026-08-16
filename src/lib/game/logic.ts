@@ -17,7 +17,7 @@ export const emptyBoard = (): Board => Array(9).fill(null);
 
 export function getWinner(board: Board): { mark: Mark; line: number[] } | null {
   for (const line of LINES) {
-    const [a, b, c] = line;
+    const [a, b, c] = line as [number, number, number];
     const v = board[a];
     if (v && v === board[b] && v === board[c]) return { mark: v, line };
   }
@@ -47,7 +47,7 @@ function minimax(board: Board, turn: Mark, me: Mark, depth: number): number {
 
 function bestMove(board: Board, me: Mark): number {
   const moves = availableMoves(board);
-  let best = moves[0];
+  let best = moves[0]!;
   let bestScore = -Infinity;
   for (const move of moves) {
     const next = [...board];
@@ -67,7 +67,7 @@ function findLine(board: Board, mark: Mark): number | null {
     const marks = cells.filter((c) => c === mark).length;
     const empty = cells.filter((c) => c === null).length;
     if (marks === 2 && empty === 1) {
-      return line[cells.findIndex((c) => c === null)];
+      return line[cells.findIndex((c) => c === null)]!;
     }
   }
   return null;
@@ -90,5 +90,5 @@ export function computerMove(
     const block = findLine(board, other(me));
     if (block !== null) return block;
   }
-  return moves[Math.floor(Math.random() * moves.length)];
+  return moves[Math.floor(Math.random() * moves.length)]!;
 }
