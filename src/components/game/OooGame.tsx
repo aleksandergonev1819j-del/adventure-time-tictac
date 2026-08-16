@@ -66,26 +66,25 @@ export function OooGame() {
 
   const play = useCallback(
     (index: number) => {
-      setBoard((prev) => {
-        if (prev[index] !== null) return prev;
-        const next = [...prev];
-        next[index] = turn;
+      if (board[index] !== null || result) return;
+      const next = [...board];
+      next[index] = turn;
+      setBoard(next);
 
-        const win = getWinner(next);
-        if (win) {
-          setResult({ mark: win.mark, line: win.line });
-          setScores((s) => ({ ...s, [win.mark]: s[win.mark] + 1 }));
-        } else if (isFull(next)) {
-          setResult({ mark: null, line: null });
-          setScores((s) => ({ ...s, draws: s.draws + 1 }));
-        } else {
-          setTurn(turn === "X" ? "O" : "X");
-        }
-        return next;
-      });
+      const win = getWinner(next);
+      if (win) {
+        setResult({ mark: win.mark, line: win.line });
+        setScores((s) => ({ ...s, [win.mark]: s[win.mark] + 1 }));
+      } else if (isFull(next)) {
+        setResult({ mark: null, line: null });
+        setScores((s) => ({ ...s, draws: s.draws + 1 }));
+      } else {
+        setTurn(turn === "X" ? "O" : "X");
+      }
     },
-    [turn],
+    [board, turn, result],
   );
+
 
   // Computer turn
   useEffect(() => {
